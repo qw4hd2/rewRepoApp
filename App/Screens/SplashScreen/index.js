@@ -16,13 +16,6 @@ export default function SplashScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.TextStyle}>WhatsThatUsman</Text>
-      {/* <TouchableOpacity
-        onPress={() => {
-          navigation.replace('OnboardingScreen');
-        }}
-        style={styles.getStartedButton}>
-        <Text style={styles.getStartedButtonText}>Get Started</Text>
-      </TouchableOpacity> */}
     </SafeAreaView>
   );
 }
