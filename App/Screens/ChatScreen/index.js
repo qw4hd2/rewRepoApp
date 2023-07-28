@@ -6,51 +6,15 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  FlatList,
   ScrollView,
-  Button,
-  ActivityIndicator,
 } from 'react-native';
 import React, {useState, useEffect, useCallback} from 'react';
 import {CustomMainHeader} from '../../Components/CustomMainHeader';
-import {GiftedChat} from 'react-native-gifted-chat';
-import {addTicketReplyy, getTicket} from '../../API/ApiIndex';
-import Toast from 'react-native-root-toast';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import DocumentPicker from 'react-native-document-picker';
-import {useFocusEffect} from '@react-navigation/native';
 import moment from 'moment';
 
 export default function ChatScreen({navigation, route}) {
-  const [currentView, setCurrentView] = useState('view1');
   const [textmessgae, settextmessgae] = useState('');
-  const [Ticket, setgetTicket] = useState([]);
-  const [addTicketReply, setaddTicketReply] = useState([]);
-  const [imageuri, setimageuri] = useState(null);
-  const [name, setname] = useState(null);
-  const [ImageType, setImageType] = useState(null);
-  const adminReplies = Ticket.filter(
-    reply => reply.requestor_type === 'Operator',
-  );
-  let ownerReplies = Ticket.filter(reply => reply.requestor_type === 'Owner');
-
-  const handlesendFile = async () => {
-    try {
-      const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.allFiles],
-      });
-
-      setimageuri(res[0].uri);
-      setname(res[0].name);
-      setImageType(res[0].type);
-    } catch (error) {
-      console.log(error); // Handle the error
-    }
-  };
-
-  const handleButtonClick = view => {
-    setCurrentView(view);
-  };
+  const [togle, settogle] = useState('');
   const convertDateFormat = dateString => {
     const date = moment(dateString, 'YYYY-MM-DD HH:mm:ss');
     const formattedDate = date.format('h:mm A');
@@ -87,7 +51,7 @@ export default function ChatScreen({navigation, route}) {
                   <Text style={styles.detailText}>Syed Mansoor</Text>
                 </View>
                 <Text style={styles.detailDescriptionText}>
-                  "New Message"
+                  New Message
                 </Text>
                 <Text
                   style={{
@@ -97,6 +61,7 @@ export default function ChatScreen({navigation, route}) {
                   }}>
                   {"22/7/2023"}
                 </Text>
+                
               </ScrollView>
 
               <>
@@ -143,7 +108,7 @@ export default function ChatScreen({navigation, route}) {
                         elevation: 0.5,
                       },
                     ]}>
-                    "here is the text"
+                    here is the text
                   </Text>
                   <Text
                     style={{
@@ -166,10 +131,70 @@ export default function ChatScreen({navigation, route}) {
       <CustomMainHeader
         imageleft={require('../../Assests/arrowLeft.png')}
         texttcenter={'Message'}
+        imagRight={require('../../Assests/dots.png')}
         onLeftPress={() => {
           navigation.goBack();
         }}
+        onpressRight={()=>{
+            settogle(!togle);
+        }}
       />
+        {togle && (
+          <View
+            style={{
+              backgroundColor: '#B3B9C9',
+              position: 'absolute',
+              right: 10,
+              top: 60,
+              width: 150,
+              marginHorizontal: 10,
+              paddingHorizontal: 10,
+              paddingVertical: 10,
+              zIndex:999
+            }}>
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#292F3F',
+                marginVertical: 5,
+                padding:10,
+              }}>
+              <Text style={{color: 'white', 
+                textAlign: 'center',
+                fontWeight:700,
+                fontSize:14
+              }}>
+                Block User
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#292F3F',
+                marginVertical: 5,
+                padding:10,
+              }}>
+              <Text style={{color: 'white', 
+                textAlign: 'center',
+                fontWeight:700,
+                fontSize:14
+              }}>
+                Delete chat
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{backgroundColor: '#292F3F',
+              padding:10,
+              zIndex:1}}>
+              <Text style={{color: 'white', 
+               textAlign: 'center',
+               fontWeight:700,
+               fontSize:14
+               }}>
+                Remove contact
+              </Text>
+            </TouchableOpacity>
+            
+          </View>
+        )}
       {renderView()}
       <View
         style={{
@@ -192,11 +217,7 @@ export default function ChatScreen({navigation, route}) {
             settextmessgae(text);
           }}
         />
-        <TouchableOpacity
-          onPress={() => handlesendFile()}
-          style={{alignSelf: 'center', position: 'absolute', right: 70}}>
-          <Image style={{}} source={require('../../Assests/Plus.png')} />
-        </TouchableOpacity>
+        
         <TouchableOpacity
           style={{
             alignSelf: 'center',
@@ -214,7 +235,6 @@ export default function ChatScreen({navigation, route}) {
     </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -222,7 +242,6 @@ const styles = StyleSheet.create({
   },
   card: {
     width: 335,
-    // height: '30%',
     paddingVertical: 13,
     borderRadius: 15,
     backgroundColor: '#F5FAFF',

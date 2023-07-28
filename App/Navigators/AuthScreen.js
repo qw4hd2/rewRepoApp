@@ -8,6 +8,10 @@ import RegistrationScreen from '../Screens/RegistrationScreen';
 import HomeScreen from '../Screens/HomeScreen';
 import ChatScreen from '../Screens/ChatScreen';
 import Profile from '../Screens/ChatScreen/Profile/profile';
+import NewContactScreen from '../Screens/NewContactScreen';
+import BlockUserScreen from '../Screens/BlockUserScreen';
+import AddContactScreen from '../Screens/AddContactScreen';
+import ViewContactScreen from '../Screens/ViewContactScreen';
 
 const Stack = createStackNavigator();
 
@@ -27,7 +31,13 @@ export default function AuthScreen() {
         />
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="NewContactScreen" component={NewContactScreen} />
+        <Stack.Screen name="BlockUserScreen" component={BlockUserScreen} />
+
         <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="ViewContactScreen" component={ViewContactScreen} />
+
+        <Stack.Screen name="AddContactScreen" component={AddContactScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

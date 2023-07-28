@@ -18,7 +18,6 @@ export const CustomMainHeader = ({
       <TouchableOpacity
         style={{position: 'absolute', right: '45%'}}
         onPress={onCenterPress}>
-        
       </TouchableOpacity>
       <Text
         style={{
@@ -57,8 +56,8 @@ const styles = {
     height: 23,
   },
   rightImage: {
-    width: 50,
-    height: 50,
+    width: 10,
+    height: 25,
     marginLeft: 10,
   },
 };

@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
-  Text,
   SafeAreaView,
   Image,
   TouchableOpacity,
@@ -24,7 +23,7 @@ const Profile = ({navigation}) => {
 
       setImageUri({uri: res[0].uri});
     } catch (error) {
-      console.log(error); // Handle the error
+      console.log(error);
     }
   };
 

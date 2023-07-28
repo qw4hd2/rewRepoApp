@@ -6,10 +6,24 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
-import {CustomMainHeader} from '../../Components/CustomMainHeader';
+import React, {useState} from 'react';
+import {FloatingAction} from 'react-native-floating-action';
 
 export default function App({navigation}) {
+  const actions = [
+    {
+      text: 'View Contact',
+      name: 'view_contact',
+      icon: require('../../Assests/Image1.png'),
+      position: 1,
+    },
+    {
+      text: 'Add Contact',
+      name: 'add_contact',
+      icon: require('../../Assests/Image1.png'),
+      position: 2,
+    },
+  ];
   const data = [
     {
       id: 1,
@@ -81,17 +95,19 @@ export default function App({navigation}) {
       date: 'Tue',
     },
   ];
-
+  const [togle, settogle] = useState('');
   const renderItem = ({item}) => (
-    <TouchableOpacity style={{marginHorizontal: 15, marginVertical: 10}}>
-      <Image
-        style={{width: 70, height: 70, marginBottom: 14}}
-        source={item.imageSource}
-      />
-      <Text style={{color: 'white', textAlign: 'center', fontWeight: 'bold'}}>
-        {item.name}
-      </Text>
-    </TouchableOpacity>
+    <View style={{marginBottom: 20}}>
+      <TouchableOpacity style={{marginHorizontal: 15, marginVertical: 10}}>
+        <Image
+          style={{width: 70, height: 70, marginBottom: 14}}
+          source={item.imageSource}
+        />
+        <Text style={{color: 'white', textAlign: 'center', fontWeight: 'bold'}}>
+          {item.name}
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
   return (
     <View style={styles.container}>
@@ -108,11 +124,72 @@ export default function App({navigation}) {
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
           <Image
-            style={{width: 40, height: 40}}
+            style={{width: 40, height: 40, marginRight: 40}}
             source={require('../../Assests/Image1.png')}
           />
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            settogle(!togle);
+          }}>
+          <Image
+            style={{
+              width: 20,
+              height: 20,
+              tintColor: 'white',
+            }}
+            source={require('../../Assests/dots.png')}
+          />
+        </TouchableOpacity>
+        {togle && (
+          <View
+            style={{
+              backgroundColor: '#B3B9C9',
+              position: 'absolute',
+              right: 1,
+              top: 30,
+              width: 150,
+              marginHorizontal: 10,
+              paddingHorizontal: 10,
+              paddingVertical: 10,
+              zIndex:999
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('BlockUserScreen');
+              }}
+              style={{
+                backgroundColor: '#292F3F',
+                marginVertical: 5,
+                padding:10,
+              }}>
+              <Text style={{color: 'white', 
+                textAlign: 'center',
+                fontWeight:700,
+                fontSize:14
+              }}>
+                Block User List
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('NewContactScreen');
+              }}
+              style={{backgroundColor: '#292F3F',
+              padding:10,
+              zIndex:1}}>
+              <Text style={{color: 'white', 
+               textAlign: 'center',
+               fontWeight:700,
+               fontSize:14
+               }}>
+                Remove contact
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
+      <View style={{height: 50}}></View>
       <Text style={{color: '#FFFFFF', marginHorizontal: 15, fontSize: 13}}>
         Recent
       </Text>
@@ -156,6 +233,17 @@ export default function App({navigation}) {
             </TouchableOpacity>
           )}
         />
+        <FloatingAction
+          actions={actions}
+          onPressItem={item => {
+            if (item == 'add_contact') {
+              navigation.navigate('AddContactScreen');
+            } else {
+              navigation.navigate('ViewContactScreen');
+            }
+            console.log('itemmmmmmm', item);
+          }}
+        />
       </View>
     </View>
   );
@@ -168,7 +256,8 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '100%',
-    height: '70%',
+    height: '60%',
+
     backgroundColor: '#292F3F',
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
